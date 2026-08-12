@@ -9,7 +9,7 @@
   * Consultar la documentación y ejemplos previos para agilizar el diseño de los bocetos.
   * Probar diferentes alternativas de estructura antes de pasar a la versión final en papel.
 
-* **Continuar haciendo:** 
+* **Continuar haciendo:**
   * Mantener la constancia en el desarrollo del proyecto y la estructura de carpetas en GitHub.
   * Basarse estrictamente en los requerimientos del cliente y la temática elegida.
 
@@ -19,3 +19,11 @@
 
 * **Dejar de hacer:** 
   * Subir archivos sueltos a la raíz del repositorio sin respetar las carpetas correspondientes (como `wireframes` o `views`).
+  * 
+# Retrospectiva 
+
+*   **Comenzar a hacer:** Planificar los tiempos de cada tarea en Trello antes de escribir código.
+*   **Hacer más:** Revisar la estructura HTML general antes de enfocarse en los estilos visuales.
+*   **Continuar haciendo:** Mantener el orden en las carpetas y subir los cambios (commits) constantemente.
+*   **Hacer menos:** Dedicar demasiado tiempo a detalles menores de diseño que pueden ajustarse al final.
+*   **Dejar de hacer:** Escribir código sin probar la visualización en el navegador de forma frecuente.
