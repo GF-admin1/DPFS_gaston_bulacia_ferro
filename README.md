@@ -13,3 +13,5 @@ Soy Gastón Bulacia, resido en Yerba Buena, Tucumán. Soy estudiante avanzado de
 3. **Cúspide Libros:** Elegido por la estética minimalista y el uso de tarjetas (cards) para mostrar las portadas de los libros.
 4. **Amazon:** Elegido por su sistema de recomendaciones y el detalle exhaustivo en las páginas de producto.
 5. **Figma Community:** Elegido por su diseño limpio y moderno para la descarga de recursos digitales (plantillas).
+# Trello
+https://trello.com/invite/b/6a7bbfa25ee26d16bba40fd1/ATTIb65d7f2716a8e035a693be7fac1801a783BE7B9B/sprint-2-lexstore
