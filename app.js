@@ -2,18 +2,17 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Configure EJS Template Engine
+// motor de plantillas
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-// Set up public files (such as CSS and images)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Main route (Home)
+// home
 app.get('/', (req, res) => {
     res.render('index');
 });
 
+// usuarios
 app.get('/login', (req, res) => {
     res.render('users/login');
 });
@@ -22,6 +21,7 @@ app.get('/register', (req, res) => {
     res.render('users/register');
 });
 
+// productos
 app.get('/productCart', (req, res) => {
     res.render('products/productCart');
 });
@@ -30,8 +30,15 @@ app.get('/productDetail', (req, res) => {
     res.render('products/productDetail');
 });
 
-// Start Server on Port 3000
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.get('/products/create', (req, res) => {
+    res.render('products/productCreate');
+});
+
+app.get('/products/edit', (req, res) => {
+    res.render('products/productEdit');
+});
+
+// levantar servidor
+app.listen(3000, () => {
+    console.log('Servidor funcionando en el puerto 3000');
 });
