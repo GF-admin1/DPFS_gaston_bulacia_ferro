@@ -1,1 +1,62 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexStore | Carrito de Compras</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header class="header-main">
+        <div class="logo">
+            <h1>LexStore</h1>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="register.html">Crear Cuenta</a></li>
+                <li><a href="login.html">Ingresar</a></li>
+                <li><a href="productCart.html">Mi Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="carrito-compras">
+            <h2>Tu Carrito</h2>
+            
+            <div class="items-carrito">
+                <!-- Item 1 -->
+                <article class="item">
+                    <img src="/img/codigo-civil.jpg" alt="Código Civil" width="80">
+                    <div class="item-detalles">
+                        <h3>Código Civil y Comercial Comentado</h3>
+                        <p>Cantidad: 1</p>
+                        <p class="precio">$45.000</p>
+                    </div>
+                </article>
+
+                <!-- Item 2 -->
+                <article class="item">
+                    <img src="/img/modelo-locacion.jpg" alt="Modelo Contrato" width="80">
+                    <div class="item-detalles">
+                        <h3>Modelo: Contrato de Locación</h3>
+                        <p>Cantidad: 1</p>
+                        <p class="precio">$8.500</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="resumen-compra">
+                <h3>Total: $53.500</h3>
+                <button class="btn-comprar">Finalizar Compra</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-main">
+        <p>&copy; 2026 LexStore. Proyecto de desarrollo web.</p>
+    </footer>
+</body>
+</html>
