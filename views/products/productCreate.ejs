@@ -1,0 +1,41 @@
+<%- include('../partials/head') %>
+
+<body>
+    <%- include('../partials/header') %>
+
+    <main class="container">
+        <section class="form-section">
+            <h2>Cargar Nuevo Producto</h2>
+            <form action="/products" method="POST" enctype="multipart/form-data">
+                <div>
+                    <label for="name">Nombre del recurso:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div>
+                    <label for="image">Imagen:</label>
+                    <input type="file" id="image" name="image">
+                </div>
+                <div>
+                    <label for="category">Categoría:</label>
+                    <select id="category" name="category">
+                        <option value="libros">Libros</option>
+                        <option value="codigos">Códigos Comentados</option>
+                        <option value="modelos">Modelos de Escritos</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="price">Precio:</label>
+                    <input type="number" id="price" name="price" required>
+                </div>
+                <button type="submit">Guardar Producto</button>
+            </form>
+        </section>
+    </main>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>
