@@ -5,10 +5,11 @@ const usersController = require('../controllers/usersController');
 // Middlewares
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const authMiddleware = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/multerMiddleware');
 
 // Rutas de registro (Solo para invitados)
 router.get('/register', guestMiddleware, usersController.register);
-router.post('/register', usersController.processRegister);
+router.post('/register', upload.single('avatar'), usersController.processRegister);
 
 // Rutas de login (Solo para invitados)
 router.get('/login', guestMiddleware, usersController.login);
