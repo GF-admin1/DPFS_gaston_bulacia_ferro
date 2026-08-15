@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Código Civil y Comercial Comentado",
+    "description": "Edición actualizada con jurisprudencia reciente de la Corte Suprema.",
+    "image": "codigo-civil.jpg",
+    "category": "codigos",
+    "price": 15000
+  },
+  {
+    "id": 2,
+    "name": "Modelo de Prescripción Adquisitiva",
+    "description": "Plantilla completa para demanda de usucapión con requisitos catastrales.",
+    "image": "modelo-prescripcion.jpg",
+    "category": "modelos",
+    "price": 5000
+  },
+  {
+    "id": 3,
+    "name": "Ley de Contrato de Trabajo Comentada",
+    "description": "Análisis dogmático y práctico de las relaciones laborales vigentes.",
+    "image": "ley-trabajo.jpg",
+    "category": "libros",
+    "price": 12000
+  }
+]
