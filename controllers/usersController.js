@@ -35,16 +35,15 @@ const usersController = {
 
     processLogin: (req, res) => {
         const users = getUsers();
-        
         const userToLogin = users.find(user => user.email === req.body.email);
 
         if (userToLogin) {
             const isPasswordValid = bcrypt.compareSync(req.body.password, userToLogin.password);
 
             if (isPasswordValid) {
-                // Guardamos al usuario en la sesión
                 req.session.userLogged = userToLogin;
-                return res.send('¡Login exitoso y sesión iniciada para ' + userToLogin.email + '!');
+                // Cambiamos el res.send por el redirect al perfil
+                return res.redirect('/users/profile');
             }
 
             return res.render('users/login', {
@@ -63,6 +62,18 @@ const usersController = {
                 }
             }
         });
+    },
+
+    // Nuevas funciones
+    profile: (req, res) => {
+        res.render('users/profile', {
+            user: req.session.userLogged
+        });
+    },
+
+    logout: (req, res) => {
+        req.session.destroy();
+        return res.redirect('/');
     }
 };
 
