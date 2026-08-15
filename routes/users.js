@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
-// 1. Requerir el controlador y el middleware de multer
 const usersController = require('../controllers/usersController');
-const upload = require('../middlewares/multerMiddleware');
 
-// Ruta al formulario de registro (GET)
+// Rutas de registro
 router.get('/register', usersController.register);
+router.post('/register', usersController.processRegister);
 
-// Ruta para procesar el registro con Multer para la foto de perfil (POST)
-router.post('/register', upload.single('avatar'), usersController.processRegister);
-
-// Ruta al formulario de login (GET)
+// Rutas de login
 router.get('/login', usersController.login);
-// Ruta para procesar el inicio de sesión (POST)
 router.post('/login', usersController.processLogin);
+
+// Rutas de perfil y logout
+router.get('/profile', usersController.profile);
+router.get('/logout', usersController.logout);
+
 module.exports = router;
