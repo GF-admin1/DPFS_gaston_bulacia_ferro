@@ -32,7 +32,30 @@ const usersController = {
     },
 
     processLogin: (req, res) => {
-        res.send('Procesando login...');
+        const users = getUsers();
+        
+        const userToLogin = users.find(user => user.email === req.body.email);
+
+        if (userToLogin) {
+            if (userToLogin.password === req.body.password) {
+                return res.send('¡Login exitoso, bienvenido ' + userToLogin.email + '!');
+            }
+            return res.render('users/login', {
+                errors: {
+                    password: {
+                        msg: 'Las credenciales son inválidas'
+                    }
+                }
+            });
+        }
+
+        return res.render('users/login', {
+            errors: {
+                email: {
+                    msg: 'No se encuentra este email en nuestra base de datos'
+                }
+            }
+        });
     }
 };
 
