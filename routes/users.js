@@ -13,5 +13,6 @@ router.post('/register', upload.single('avatar'), usersController.processRegiste
 
 // Ruta al formulario de login (GET)
 router.get('/login', usersController.login);
-
+// Ruta para procesar el inicio de sesión (POST)
+router.post('/login', usersController.processLogin);
 module.exports = router;
