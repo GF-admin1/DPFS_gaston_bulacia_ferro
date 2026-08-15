@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 
 const usersFilePath = path.join(__dirname, '../data/users.json');
 
@@ -18,6 +19,7 @@ const usersController = {
         const newUser = {
             id: users.length > 0 ? users[users.length - 1].id + 1 : 1,
             ...req.body,
+            password: bcrypt.hashSync(req.body.password, 10),
             avatar: req.file ? req.file.filename : 'default.png'
         };
 
@@ -37,9 +39,14 @@ const usersController = {
         const userToLogin = users.find(user => user.email === req.body.email);
 
         if (userToLogin) {
-            if (userToLogin.password === req.body.password) {
-                return res.send('¡Login exitoso, bienvenido ' + userToLogin.email + '!');
+            const isPasswordValid = bcrypt.compareSync(req.body.password, userToLogin.password);
+
+            if (isPasswordValid) {
+                // Guardamos al usuario en la sesión
+                req.session.userLogged = userToLogin;
+                return res.send('¡Login exitoso y sesión iniciada para ' + userToLogin.email + '!');
             }
+
             return res.render('users/login', {
                 errors: {
                     password: {
