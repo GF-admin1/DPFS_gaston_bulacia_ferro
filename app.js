@@ -3,12 +3,16 @@ const path = require('path');
 const session = require('express-session');
 const app = express();
 
+const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
+
 // Configuración de sesión
 app.use(session({
     secret: 'SecretoDeLexStore',
     resave: false,
     saveUninitialized: false
 }));
+
+app.use(userLoggedMiddleware);
 
 // Rutas
 const productsRoutes = require('./routes/productsRoutes');
