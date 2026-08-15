@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "firstName": "Gastón",
+    "lastName": "Bulacia Ferro",
+    "email": "gaston@ejemplo.com",
+    "password": "password123",
+    "category": "admin",
+    "image": "gaston.jpg"
+  },
+  {
+    "id": 2,
+    "firstName": "Juan",
+    "lastName": "Pérez",
+    "email": "juanperez@ejemplo.com",
+    "password": "clave456",
+    "category": "user",
+    "image": "juan.jpg"
+  }
+]
