@@ -1,68 +1,103 @@
-const fs = require('fs');
-const path = require('path');
+const db = require('../database/models');
 
-const productsFilePath = path.join(__dirname, '../data/products.json');
-const getProducts = () => JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+const productsController = {
+    // Listado de productos
+    index: async (req, res) => {
+        try {
+            const products = await db.Product.findAll({
+                include: ['category']
+            });
+            return res.render('products/shop', { products });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al cargar los productos');
+        }
+    },
 
-const controller = {
-    index: (req, res) => {
-        const products = getProducts();
-        res.render('products/products', { products });
+    // Detalle de un producto
+    detail: async (req, res) => {
+        try {
+            const product = await db.Product.findByPk(req.params.id, {
+                include: ['category']
+            });
+            return res.render('products/detail', { product });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al buscar el producto');
+        }
     },
-    detail: (req, res) => {
-        const products = getProducts();
-        const id = req.params.id;
-        const product = products.find(prod => prod.id == id);
-        res.render('products/productDetail', { product });
+
+    // Formulario de creación
+    create: async (req, res) => {
+        try {
+            const categories = await db.Category.findAll();
+            return res.render('products/create', { categories });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al cargar el formulario');
+        }
     },
-    create: (req, res) => {
-        res.render('products/productCreate');
-    },
-    store: (req, res) => {
-        const products = getProducts();
-        const newProduct = {
-            id: products.length > 0 ? products[products.length - 1].id + 1 : 1,
-            name: req.body.name,
-            description: req.body.description,
-            image: 'default.jpg',
-            category: req.body.category,
-            price: Number(req.body.price)
-        };
-        products.push(newProduct);
-        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
-        res.redirect('/products');
-    },
-    edit: (req, res) => {
-        const products = getProducts();
-        const id = req.params.id;
-        const product = products.find(prod => prod.id == id);
-        res.render('products/productEdit', { product });
-    },
-    update: (req, res) => {
-        const products = getProducts();
-        const id = req.params.id;
-        
-        const productIndex = products.findIndex(prod => prod.id == id);
-        if (productIndex !== -1) {
-            products[productIndex] = {
-                id: Number(id),
+
+    // Guardar el producto creado
+    store: async (req, res) => {
+        try {
+            await db.Product.create({
                 name: req.body.name,
                 description: req.body.description,
-                image: products[productIndex].image,
-                category: req.body.category,
-                price: Number(req.body.price)
-            };
-            fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
+                price: req.body.price,
+                category_id: req.body.category_id,
+                image: req.file ? req.file.filename : 'default-image.png'
+            });
+            return res.redirect('/products');
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al crear el producto');
         }
-        res.redirect('/products');
     },
-    destroy: (req, res) => {
-        let products = getProducts();
-        const id = req.params.id;
-        products = products.filter(prod => prod.id != id);
-        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
-        res.redirect('/products');
+
+    // Formulario de edición
+    edit: async (req, res) => {
+        try {
+            const product = await db.Product.findByPk(req.params.id);
+            const categories = await db.Category.findAll();
+            return res.render('products/edit', { product, categories });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al cargar la edición');
+        }
+    },
+
+    // Actualizar el producto
+    update: async (req, res) => {
+        try {
+            await db.Product.update({
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+                category_id: req.body.category_id,
+                image: req.file ? req.file.filename : req.body.oldImage
+            }, {
+                where: { id: req.params.id }
+            });
+            return res.redirect('/products');
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al actualizar el producto');
+        }
+    },
+
+    // Eliminar producto
+    destroy: async (req, res) => {
+        try {
+            await db.Product.destroy({
+                where: { id: req.params.id }
+            });
+            return res.redirect('/products');
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al eliminar el producto');
+        }
     }
 };
 
-module.exports = controller;
+module.exports = productsController;
