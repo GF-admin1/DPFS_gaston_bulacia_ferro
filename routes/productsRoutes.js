@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Requerir el controlador de productos
 const productsController = require('../controllers/productsController');
+const productValidation = require('../middlewares/productValidation');
 
 // Listado de productos
 router.get('/', productsController.index);
@@ -14,13 +15,13 @@ router.get('/create', productsController.create);
 router.get('/:id', productsController.detail);
 
 // Acción de creación (POST)
-router.post('/', productsController.store);
+router.post('/', productValidation, productsController.store);
 
 // Formulario de edición de un producto
 router.get('/:id/edit', productsController.edit);
 
 // Acción de edición (PUT)
-router.put('/:id', productsController.update);
+router.put('/:id', productValidation, productsController.update);
 
 // Acción de borrado (DELETE)
 router.delete('/:id', productsController.destroy);

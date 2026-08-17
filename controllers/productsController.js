@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const db = require('../database/models');
 
 const productsController = {
@@ -40,6 +41,17 @@ const productsController = {
 
     // Guardar el producto creado
     store: async (req, res) => {
+        const resultValidation = validationResult(req);
+
+        if (resultValidation.errors.length > 0) {
+            const categories = await db.Category.findAll();
+            return res.render('products/productCreate', {
+                errors: resultValidation.mapped(),
+                oldData: req.body,
+                categories
+            });
+        }
+
         try {
             await db.Product.create({
                 name: req.body.name,
@@ -69,6 +81,19 @@ const productsController = {
 
     // Actualizar el producto
     update: async (req, res) => {
+        const resultValidation = validationResult(req);
+
+        if (resultValidation.errors.length > 0) {
+            const categories = await db.Category.findAll();
+            const product = await db.Product.findByPk(req.params.id);
+            return res.render('products/productsEdit', {
+                errors: resultValidation.mapped(),
+                oldData: req.body,
+                product: { ...product.toJSON(), ...req.body },
+                categories
+            });
+        }
+
         try {
             await db.Product.update({
                 name: req.body.name,

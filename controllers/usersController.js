@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
 const db = require('../database/models');
 
 const usersController = {
@@ -7,6 +8,15 @@ const usersController = {
     },
     
     processRegister: async (req, res) => {
+        const resultValidation = validationResult(req);
+
+        if (resultValidation.errors.length > 0) {
+            return res.render('users/register', {
+                errors: resultValidation.mapped(),
+                oldData: req.body
+            });
+        }
+
         try {
             await db.User.create({
                 first_name: req.body.first_name,
@@ -28,6 +38,15 @@ const usersController = {
     },
 
     processLogin: async (req, res) => {
+        const resultValidation = validationResult(req);
+
+        if (resultValidation.errors.length > 0) {
+            return res.render('users/login', {
+                errors: resultValidation.mapped(),
+                oldData: req.body
+            });
+        }
+
         try {
             const userToLogin = await db.User.findOne({
                 where: { email: req.body.email }
@@ -46,7 +65,8 @@ const usersController = {
                         password: {
                             msg: 'Las credenciales son inválidas'
                         }
-                    }
+                    },
+                    oldData: req.body
                 });
             }
 
@@ -55,7 +75,8 @@ const usersController = {
                     email: {
                         msg: 'No se encuentra este email en nuestra base de datos'
                     }
-                }
+                },
+                oldData: req.body
             });
         } catch (error) {
             console.log(error);
@@ -68,7 +89,8 @@ const usersController = {
             user: req.session.userLogged
         });
     },
-edit: async (req, res) => {
+
+    edit: async (req, res) => {
         try {
             const user = await db.User.findByPk(req.params.id || req.session.userLogged.id);
             return res.render('users/userEdit', { user });
@@ -99,6 +121,7 @@ edit: async (req, res) => {
             return res.status(500).send('Error al actualizar usuario');
         }
     },
+
     logout: (req, res) => {
         req.session.destroy();
         return res.redirect('/');
