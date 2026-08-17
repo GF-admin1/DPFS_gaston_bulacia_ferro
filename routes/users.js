@@ -18,5 +18,7 @@ router.post('/login', usersController.processLogin);
 // Rutas de perfil y logout (Solo para usuarios logueados)
 router.get('/profile', authMiddleware, usersController.profile);
 router.get('/logout', usersController.logout);
+router.get('/edit/:id?', authMiddleware, usersController.edit);
+router.put('/edit/:id?', upload.single('avatar'), usersController.processEdit);
 
 module.exports = router;

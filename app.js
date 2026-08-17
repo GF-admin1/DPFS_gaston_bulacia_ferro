@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const methodOverride = require('method-override');
 const app = express();
 
 const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Para capturar información de formularios (POST)
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 // Usar las rutas
 app.use('/products', productsRoutes);

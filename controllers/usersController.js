@@ -68,7 +68,37 @@ const usersController = {
             user: req.session.userLogged
         });
     },
+edit: async (req, res) => {
+        try {
+            const user = await db.User.findByPk(req.params.id || req.session.userLogged.id);
+            return res.render('users/userEdit', { user });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al cargar edición');
+        }
+    },
 
+    processEdit: async (req, res) => {
+        try {
+            const userId = req.params.id || req.session.userLogged.id;
+            await db.User.update({
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                email: req.body.email,
+                profile_image: req.file ? req.file.filename : req.body.oldImage
+            }, {
+                where: { id: userId }
+            });
+
+            // Actualizar los datos de la sesión
+            req.session.userLogged = await db.User.findByPk(userId);
+
+            return res.redirect('/users/profile');
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error al actualizar usuario');
+        }
+    },
     logout: (req, res) => {
         req.session.destroy();
         return res.redirect('/');

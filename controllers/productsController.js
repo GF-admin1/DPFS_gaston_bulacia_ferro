@@ -7,7 +7,7 @@ const productsController = {
             const products = await db.Product.findAll({
                 include: ['category']
             });
-            return res.render('products/shop', { products });
+            return res.render('products/products', { products });
         } catch (error) {
             console.log(error);
             return res.status(500).send('Error al cargar los productos');
@@ -20,7 +20,7 @@ const productsController = {
             const product = await db.Product.findByPk(req.params.id, {
                 include: ['category']
             });
-            return res.render('products/detail', { product });
+            return res.render('products/productDetail', { product });
         } catch (error) {
             console.log(error);
             return res.status(500).send('Error al buscar el producto');
@@ -31,7 +31,7 @@ const productsController = {
     create: async (req, res) => {
         try {
             const categories = await db.Category.findAll();
-            return res.render('products/create', { categories });
+            return res.render('products/productCreate', { categories });
         } catch (error) {
             console.log(error);
             return res.status(500).send('Error al cargar el formulario');
@@ -60,7 +60,7 @@ const productsController = {
         try {
             const product = await db.Product.findByPk(req.params.id);
             const categories = await db.Category.findAll();
-            return res.render('products/edit', { product, categories });
+            return res.render('products/productsEdit', { product, categories });
         } catch (error) {
             console.log(error);
             return res.status(500).send('Error al cargar la edición');
