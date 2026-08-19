@@ -2,8 +2,9 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const cors = require('cors');
 const app = express();
-
+app.use(cors());
 const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware');
 
 // Configuración de sesión
@@ -18,6 +19,8 @@ app.use(userLoggedMiddleware);
 // Rutas
 const productsRoutes = require('./routes/productsRoutes');
 const userRoutes = require('./routes/users');
+const apiUsersRoutes = require('./routes/api/usersRoutes');
+const apiProductsRoutes = require('./routes/api/productsRoutes');
 
 // Configuración del motor de vistas
 app.set('view engine', 'ejs');
@@ -34,6 +37,8 @@ app.use(methodOverride('_method'));
 // Usar las rutas
 app.use('/products', productsRoutes);
 app.use('/users', userRoutes);
+app.use('/api/users', apiUsersRoutes);
+app.use('/api/products', apiProductsRoutes);
 
 // Ruta principal (Home)
 app.get('/', (req, res) => {
